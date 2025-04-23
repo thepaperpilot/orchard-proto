@@ -2,7 +2,6 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file
 
 import { defineConfig } from '#q-app/wrappers';
-import { fileURLToPath } from 'node:url';
 
 export default defineConfig((/* ctx */) => {
   return {
@@ -33,21 +32,6 @@ export default defineConfig((/* ctx */) => {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#build
     build: {
-      alias: {
-        '@muni-town/leaf': fileURLToPath(
-          new URL('./vendor/leaf/packages/leaf/index.ts', import.meta.url),
-        ),
-        '@roomy-chat/sdk': fileURLToPath(new URL('./vendor/roomy/src/index.ts', import.meta.url)),
-      },
-
-      extendViteConf(config) {
-        config.optimizeDeps = {
-          esbuildOptions: {
-            target: 'es2022',
-          },
-        };
-      },
-
       target: {
         browser: ['es2022', 'firefox115', 'chrome115', 'safari14'],
         node: 'node20',

@@ -1,6 +1,0 @@
-[submodule "vendor/leaf"]
-	path = vendor/leaf
-	url = https://github.com/muni-town/leaf.git
-[submodule "vendor/roomy"]
-	path = vendor/roomy
-	url = https://github.com/muni-town/roomy-sdk.git
