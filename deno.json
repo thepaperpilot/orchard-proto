@@ -1,0 +1,11 @@
+{
+  "lint": {
+    "rules": {
+      "tags": ["recommended"]
+    }
+  },
+  "imports": {
+    "@muni-town/leaf": "jsr:@muni-town/leaf@^0.2.0-preview.16",
+    "@roomy-chat/sdk": "jsr:@roomy-chat/sdk@^0.1.0-preview.16"
+  }
+}

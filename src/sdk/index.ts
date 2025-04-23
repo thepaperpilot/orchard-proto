@@ -1,7 +1,12 @@
-import type { IntoEntityId, LoroText, Peer } from '@muni-town/leaf';
-import { intoEntityId } from '@muni-town/leaf';
-import { EntityList, EntityWrapper, components as roomyComponents } from '@roomy-chat/sdk';
-import { Blocks, Pages } from './components';
+import type { IntoEntityId, LoroText, Peer } from "@muni-town/leaf";
+import { intoEntityId } from "@muni-town/leaf";
+import {
+  EntityList,
+  EntityWrapper,
+  components as roomyComponents,
+} from "@roomy-chat/sdk";
+import { Blocks, Pages } from "./components.ts";
+import { LoroDoc } from "loro-crdt";
 
 export class Orchard extends EntityWrapper {
   static async init(peer: Peer, catalogId: IntoEntityId) {
@@ -16,10 +21,14 @@ export class Orchard extends EntityWrapper {
 
 export class Page extends EntityWrapper {
   get name(): string {
-    return this.entity.getOrInit(roomyComponents.BasicMeta, (x) => x.get('name'));
+    return this.entity.getOrInit(roomyComponents.BasicMeta, (x) =>
+      x.get("name")
+    );
   }
   set name(name: string) {
-    this.entity.getOrInit(roomyComponents.BasicMeta, (x) => x.set('name', name));
+    this.entity.getOrInit(roomyComponents.BasicMeta, (x) =>
+      x.set("name", name)
+    );
   }
 
   get blocks(): EntityList<Block> {
@@ -28,8 +37,8 @@ export class Page extends EntityWrapper {
 }
 
 export class Block extends EntityWrapper {
-  body<R>(handler: (x: LoroText) => R): R {
-    return this.entity.getOrInit(roomyComponents.Content, handler);
+  get doc(): LoroDoc {
+    return this.entity.doc;
   }
 
   get blocks(): EntityList<Block> {

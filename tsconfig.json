@@ -1,17 +1,7 @@
 {
-  "extends": "./.quasar/tsconfig.json",
-  "compilerOptions": {
-    "allowImportingTsExtensions": true
-  },
-  "exclude": [
-    "./vendor/leaf/examples",
-    "./vendor/leaf/packages/leaf/leaf.test.ts",
-    "./vendor/leaf/packages/leaf-storage-deno-fs",
-    "./vendor/leaf/packages/leaf-storage-deno-kv",
-    "./vendor/leaf/packages/leaf-storage-indexeddb",
-    "./vendor/leaf/packages/leaf-svelte",
-    "./vendor/leaf/packages/leaf-sync-socket-io-client",
-    "./vendor/leaf/packages/leaf-sync-socket-io-server",
-    "./vendor/leaf/packages/leaf-sync-ws"
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
   ]
 }
