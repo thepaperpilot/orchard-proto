@@ -1,13 +1,118 @@
-import type { IntoEntityId, LoroText, Peer } from "@muni-town/leaf";
+import type {
+  ComponentDef,
+  Entity,
+  EntityIdStr,
+  IntoEntityId,
+  Peer,
+} from "@muni-town/leaf";
 import { intoEntityId } from "@muni-town/leaf";
 import {
+  EntityConstructor,
   EntityList,
   EntityWrapper,
   components as roomyComponents,
 } from "@roomy-chat/sdk";
-import { Blocks, Pages } from "./components.ts";
-import { LoroDoc } from "loro-crdt";
+import { LoroDoc, LoroMap, LoroText } from "loro-crdt";
+import { BlockContent, Blocks, Journal, Pages } from "./components.ts";
+import { LoroDocType } from "loro-prosemirror";
 
+export class EntityMap<
+  T extends EntityWrapper,
+  L extends LoroMap<Record<string, EntityIdStr>> = LoroMap<
+    Record<string, EntityIdStr>
+  >,
+> extends EntityWrapper {
+  #def: ComponentDef<L>;
+  #factory: EntityConstructor<T>;
+
+  constructor(
+    peer: Peer,
+    entity: Entity,
+    component: ComponentDef<L>,
+    constructor: EntityConstructor<T>
+  ) {
+    super(peer, entity);
+    this.#def = component;
+    this.#factory = constructor;
+  }
+
+  get size() {
+    return this.entity.getOrInit(this.#def, (x) => x.size);
+  }
+
+  keys(): string[] {
+    return this.entity.getOrInit(this.#def, (x) => x.keys());
+  }
+
+  values(): EntityIdStr[] {
+    return this.entity.getOrInit(this.#def, (x) => x.values());
+  }
+
+  async entities(): Promise<T[]> {
+    return await Promise.all(
+      this.entity.getOrInit(this.#def, (x) =>
+        x
+          .values()
+          .map(
+            async (key) =>
+              new this.#factory(this.peer, await this.peer.open(x.get(key)))
+          )
+      )
+    );
+  }
+
+  async entries(): Promise<[string, T][]> {
+    return await Promise.all(
+      this.entity.getOrInit(this.#def, (x) =>
+        x
+          .keys()
+          .map(async (key) => [
+            key,
+            new this.#factory(this.peer, await this.peer.open(x.get(key))),
+          ])
+      )
+    );
+  }
+
+  async items(): Promise<Record<string, T>> {
+    return (await this.entries()).reduce(
+      (acc, [key, entity]) => ({ ...acc, [key]: entity }),
+      {}
+    );
+  }
+
+  has(key: string): boolean {
+    return this.entity.getOrInit(this.#def, (x) => x.get(key)) == null;
+  }
+
+  async get(key: string): Promise<T | null> {
+    return await this.entity.getOrInit(
+      this.#def,
+      async (x) =>
+        new this.#factory(this.peer, await this.peer.open(x.get(key)))
+    );
+  }
+
+  getId(key: string): EntityIdStr | null {
+    return this.entity.getOrInit(this.#def, (x) => x.get(key));
+  }
+
+  set(key: string, item: EntityIdStr | T) {
+    this.entity.getOrInit(this.#def, (x) =>
+      x.set(key, typeof item === "string" ? item : item.entity.id.toString())
+    );
+  }
+
+  remove(key: string) {
+    this.entity.getOrInit(this.#def, (x) => x.delete(key));
+  }
+
+  delete() {
+    this.entity.delete(this.#def);
+  }
+}
+
+// TODO Wrapper to make these reactive?
 export class Orchard extends EntityWrapper {
   static async init(peer: Peer, catalogId: IntoEntityId) {
     const catalog = await peer.open(intoEntityId(catalogId));
@@ -16,6 +121,10 @@ export class Orchard extends EntityWrapper {
 
   get pages(): EntityList<Page> {
     return new EntityList(this.peer, this.entity, Pages, Page);
+  }
+
+  get journal(): EntityMap<Page> {
+    return new EntityMap(this.peer, this.entity, Journal, Page);
   }
 }
 
@@ -37,8 +146,8 @@ export class Page extends EntityWrapper {
 }
 
 export class Block extends EntityWrapper {
-  get doc(): LoroDoc {
-    return this.entity.doc;
+  get content(): LoroDocType {
+    return this.entity.getOrInit(BlockContent, (x) => x as LoroDocType);
   }
 
   get blocks(): EntityList<Block> {

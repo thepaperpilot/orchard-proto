@@ -13,19 +13,19 @@ import { defineLoro } from 'prosekit/extensions/loro'
 import { ProseKit } from 'prosekit/vue'
 import {
   CursorAwareness,
+  type LoroDocType
 } from 'loro-prosemirror'
 import {
   ref,
   watchPostEffect,
 } from 'vue'
-import type { Block } from '../sdk'
 
-const { block } = defineProps<{
-  block: Block
+const { doc } = defineProps<{
+  doc: LoroDocType
 }>();
 
-const awareness = new CursorAwareness(block.doc.peerIdStr)
-const extension = defineLoro({ doc: block.doc, awareness })
+const awareness = new CursorAwareness(doc.peerIdStr)
+const extension = defineLoro({ doc: doc, awareness })
 const editor = createEditor({ extension })
 
 const editorRef = ref<HTMLDivElement | null>(null)
