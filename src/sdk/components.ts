@@ -22,7 +22,7 @@ export const Blocks = defComponent(
 );
 
 // ProseKit needs a loro doc of its own, so this component will have a nested doc
-export const BlockContent = defComponent(
-  "blockContent:01JSMW46QAADZH6E3XZP39E8DW",
+export const Content = defComponent(
+  "content:01JSMW46QAADZH6E3XZP39E8DW",
   LoroDoc
 );

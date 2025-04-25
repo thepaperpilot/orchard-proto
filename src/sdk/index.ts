@@ -12,9 +12,9 @@ import {
   EntityWrapper,
   components as roomyComponents,
 } from "@roomy-chat/sdk";
-import { LoroDoc, LoroMap, LoroText } from "loro-crdt";
-import { BlockContent, Blocks, Journal, Pages } from "./components.ts";
+import { LoroMap } from "loro-crdt";
 import { LoroDocType } from "loro-prosemirror";
+import { Blocks, Content, Journal, Pages } from "./components.ts";
 
 export class EntityMap<
   T extends EntityWrapper,
@@ -147,7 +147,7 @@ export class Page extends EntityWrapper {
 
 export class Block extends EntityWrapper {
   get content(): LoroDocType {
-    return this.entity.getOrInit(BlockContent, (x) => x as LoroDocType);
+    return this.entity.getOrInit(Content, (x) => x as LoroDocType);
   }
 
   get blocks(): EntityList<Block> {
