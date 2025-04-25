@@ -7,14 +7,16 @@ import type {
 } from "@muni-town/leaf";
 import { intoEntityId } from "@muni-town/leaf";
 import {
-  EntityConstructor,
+  type EntityConstructor,
   EntityList,
   EntityWrapper,
   components as roomyComponents,
 } from "@roomy-chat/sdk";
-import { LoroMap } from "loro-crdt";
-import { LoroDocType } from "loro-prosemirror";
-import { Blocks, Content, Journal, Pages } from "./components.ts";
+import { LoroMap } from "@muni-town/leaf";
+import loroProseMirror from "loro-prosemirror";
+import { Blocks, Content, Journal, Pages } from "./components";
+
+export type LoroDocType = loroProseMirror.LoroDocType;
 
 export class EntityMap<
   T extends EntityWrapper,

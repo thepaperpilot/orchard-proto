@@ -1,6 +1,4 @@
-import type { EntityIdStr } from "@muni-town/leaf";
-import { defComponent } from "@muni-town/leaf";
-import { LoroDoc, LoroMap, LoroMovableList } from "loro-crdt";
+import { defComponent, type EntityIdStr, LoroDoc, LoroMap, LoroMovableList } from "@muni-town/leaf";
 
 // TODO move to orchard-sdk repo
 

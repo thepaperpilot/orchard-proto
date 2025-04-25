@@ -1,9 +1,20 @@
-import vue from "@vitejs/plugin-vue";
-import { defineConfig } from "vite";
-import topLevelAwait from "vite-plugin-top-level-await";
+import { sveltekit } from "@sveltejs/kit/vite";
+import tailwindcss from "@tailwindcss/vite";
+import { defineConfig, type Plugin, type PluginOption } from "vite";
 import wasm from "vite-plugin-wasm";
+import topLevelAwait from "vite-plugin-top-level-await";
+import arraybuffer from "vite-plugin-arraybuffer";
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [vue(), wasm(), topLevelAwait()],
+  plugins: [
+    arraybuffer(),
+    wasm(),
+    topLevelAwait(),
+    sveltekit(),
+    tailwindcss(),
+  ] as PluginOption[],
+  build: {
+    target: "es2022",
+    chunkSizeWarningLimit: 2048,
+  },
 });

@@ -1,5 +1,23 @@
-# Vue 3 + TypeScript + Vite
+# Roomy
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Gardenable group chat made with [AT Protocol](https://atproto.com/), [Loro](https://loro.dev) and [Leaf SDK](https://github.com/muni-town/leaf).
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+Currently working on producing a functional proof-of-concept. See the
+[Roadmap](https://github.com/orgs/muni-town/projects/8/views/4).
+
+## Devlog
+
+* [Roomy Chat - Alpha](https://blog.muni.town/roomy-chat-alpha/)
+* [Roomy Deep Dive: ATProto + Automerge](https://blog.muni.town/roomy-deep-dive/)
+
+## Design
+
+Roomy is a spiritual sibling of [Commune](https://github.com/commune-sh). The same core concepts of 'digital gardening applied to group messaging' apply.
+
+* [Assembling Community OS](https://blog.erlend.sh/assembling-community-os)
+* [Communal Bonfires](https://blog.erlend.sh/communal-bonfires)
+* [Cozy Community Software](https://blog.erlend.sh/cozy-community-software)
+* [Chat is minimum-viable anything](https://blog.commune.sh/chat-is-minimum-viable-anything/)
+* [Beyond Discord](https://blog.commune.sh/beyond-discord/)
+* [Federated Webrings](https://blog.commune.sh/federated-webrings/)
+* [Chatty Community Gardens](https://blog.muni.town/chatty-community-gardens/)

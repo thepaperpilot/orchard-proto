@@ -1,4 +1,5 @@
 {
+  "deno.enablePaths": ["./src/lib/schemas/", "./gitignore"],
   "deno.enable": true,
   "deno.lint": true,
   "editor.defaultFormatter": "denoland.vscode-deno",

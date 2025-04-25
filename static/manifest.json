@@ -1,0 +1,6 @@
+{
+  "name": "Orchard",
+  "description": "Local-First Communal Digital Gardening",
+  "display": "standalone",
+  "start_url": "/"
+}
